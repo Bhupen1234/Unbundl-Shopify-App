@@ -1,0 +1,44 @@
+.wrapper>h2{
+text-align: center;
+margin-bottom: 22px;
+}
+
+
+.selectedChoclates{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+}
+
+.totalContainer{
+    background-color: white;
+    margin: auto;
+    /* width: 90%; */
+    /* height: 50vw; */
+    margin-top: 22px;
+    border-radius: 30px;
+    color: black;
+}
+
+h3,h4{
+    text-align: center;
+    
+}
+
+
+.btns{
+    margin: auto;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    
+}
+
+.totalPackPrice{
+    margin-top: 22px;
+}

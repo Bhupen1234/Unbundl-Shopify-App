@@ -8,15 +8,43 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import choclateImage from "../../Images/ChocolateImage.jpg"
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-const Chocolates = ({setSelectedChocolates,selectedChocolates}) => {
+
+const ChocolateCard =({chocolate,selectedChocolates,selectChocolate,removeChocolate})=>{
+  return (
+    <Card sx={{ maxWidth: "100%" }} key={chocolate.id} >
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="90%"
+                image={choclateImage}
+              />
+              <CardContent sx={{display:"flex", justifyContent:"space-between"}}>
+                <Typography gutterBottom variant="h5" component="div">
+                 {chocolate.name}
+                </Typography>
+               <Typography variant="h6" component="div" >
+                  {chocolate.price} Rs
+               </Typography>
+              </CardContent>
+              <CardActions>
+                {
+                 !selectedChocolates.includes(chocolate) ?  (<Button variant="contained" onClick={()=>selectChocolate(chocolate)} fullWidth>Select</Button>) :(   <Button variant="contained"  onClick={()=>removeChocolate(chocolate)} fullWidth>Remove</Button>)
+                }
+           
+              </CardActions>
+            </Card>
+  )
+}
+
+const Chocolates = ({setSelectedChocolates,selectedChocolates,pack}) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const selectChocolate =(chocolate)=>{
-     if(selectedChocolates.length>7){
-      enqueueSnackbar("You can select only 8 Chocolates per Pack",{variant:"warning"})
+     if(selectedChocolates.length>(pack-1)){
+      enqueueSnackbar(`You can select only ${pack}  Chocolates per Pack`,{variant:"warning"})
      }
      else{
           setSelectedChocolates((prevState)=>{
@@ -30,42 +58,20 @@ const Chocolates = ({setSelectedChocolates,selectedChocolates}) => {
 
     setSelectedChocolates(filtereddata)
   }
-  useEffect(()=>{
-   console.log(selectedChocolates)
-  },[selectedChocolates])
+
   return (
     <div className={styles.wrapper}>
       <h2>Please Select the Chocolates</h2>
-      <div className={styles.cardWrapper}>
+      <Box className={styles.cardWrapper}   >
 
-        
-          <Grid container spacing={2}>
+      
+          <Grid container  spacing={2} rowGap={"10px"}>
             {
           chocolatesdata.map((ele)=>{
             return(
-              <Grid item xs={12} sm={6} md={4}>
-              <Card sx={{ maxWidth: 250 }} key={ele.id}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="90%"
-                image={choclateImage}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                 {ele.name}
-                </Typography>
-               <Typography variant="h6" component="div" >
-                  {ele.price} Rs
-               </Typography>
-              </CardContent>
-              <CardActions>
-                {
-                 !selectedChocolates.includes(ele) ?  (<Button variant="contained" onClick={()=>selectChocolate(ele)}>Select</Button>) :(   <Button variant="contained"  onClick={()=>removeChocolate(ele)}>Remove</Button>)
-                }
-           
-              </CardActions>
-            </Card>
+              <Grid item xs={12} sm={6} md={4} >
+             
+              <ChocolateCard selectedChocolates={selectedChocolates} chocolate={ele} selectChocolate={selectChocolate} removeChocolate={removeChocolate}/>
             </Grid>
 
             )
@@ -73,7 +79,7 @@ const Chocolates = ({setSelectedChocolates,selectedChocolates}) => {
           })
         }
          </Grid>
-      </div>
+      </Box>
     </div>
   );
 };

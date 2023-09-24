@@ -4,59 +4,19 @@ import Chip from "@mui/joy/Chip";
 import ChipDelete from '@mui/joy/ChipDelete';
 import Button from '@mui/material/Button';
 import { useSnackbar } from "notistack";
+import { Box } from "@mui/material";
 
 
-const CustomPack = ({ selectedChocolates ,setSelectedChocolates}) => {
 
-    const [totalPackPrice, setTotalPackPrice] = useState(0);
-    const [totalPrice,setTotalPrice] = useState(0)
-    const [packQty,setPackQty] = useState(1)
+const SelectedChocolatePills = ({selectedChocolates,setSelectedChocolates}) => {
+  const removeChocolate =(chocolate)=>{
+    let filtereddata = selectedChocolates.filter((ele)=>(ele.id !== chocolate.id))
 
-    const { enqueueSnackbar } = useSnackbar();
-
-    const removeChocolate =(chocolate)=>{
-        let filtereddata = selectedChocolates.filter((ele)=>(ele.id !== chocolate.id))
-    
-        setSelectedChocolates(filtereddata)
-      }
-
-    const updateTotalPackPrice =(selectedChoclates)=>{
-       let sum=0;
-       selectedChoclates.forEach((ele)=>{
-           sum+=ele.price
-       })
-
-        setTotalPackPrice(sum)
-    }
-    const decreasePackQty =()=>{
-        if(packQty>1){
-            setPackQty((prevState)=> prevState-1)
-        }
-    }
-
-     const increasePackQty =()=>{
-
-        if(selectedChocolates.length>1){
-            setPackQty((prevState)=>prevState+1)
-        }
-        else{
-            enqueueSnackbar("Please select atleast 2 Chocolates",{variant:"warning"})
-        }
-       
-        
-     }
-
-     useEffect(()=>{
-       setTotalPrice(packQty*totalPackPrice)
-     },[packQty])
-
-    useEffect(()=>{
-     updateTotalPackPrice(selectedChocolates)
-    },[selectedChocolates])
+    setSelectedChocolates(filtereddata)
+  }
   return (
-    <div className={styles.wrapper}>
-      <h2>Custom Pack of Chocolates</h2>
-      <div className={styles.selectedChoclates}>
+    <div className={styles.selectedChoclates}>
+     
         {selectedChocolates.map((ele) => {
           return (
             <span key={ele.id}>
@@ -66,7 +26,68 @@ const CustomPack = ({ selectedChocolates ,setSelectedChocolates}) => {
             </span>
           );
         })}
-      </div>
+   
+    </div>
+  )
+}
+
+
+
+const CustomPack = ({ selectedChocolates ,setSelectedChocolates,pack}) => {
+
+    const [totalPackPrice, setTotalPackPrice] = useState(0);
+    const [totalPrice,setTotalPrice] = useState(0)
+    const [packQty,setPackQty] = useState(1)
+
+    const { enqueueSnackbar } = useSnackbar();
+
+  
+
+    const updateTotalPackPrice =(selectedChoclates)=>{
+       let sum=0;
+       selectedChoclates.forEach((ele)=>{
+           sum+=ele.price
+       })
+
+        setTotalPackPrice(sum)
+      
+    }
+    const decreasePackQty =()=>{
+        if(packQty>1){
+            setPackQty((prevState)=> prevState-1)
+        }
+    }
+
+     const increasePackQty =()=>{
+
+        if(selectedChocolates.length>(pack-1)){
+            setPackQty((prevState)=>prevState+1)
+        }
+        else{
+            enqueueSnackbar(`Please select ${pack} Chocolates`,{variant:"warning"})
+        }
+       
+        
+     }
+
+     useEffect(()=>{
+       setTotalPrice(packQty*totalPackPrice)
+     },[packQty,totalPackPrice])
+
+    useEffect(()=>{
+      if(selectedChocolates.length<(pack-1)){
+         setPackQty(1)
+         setTotalPrice(0)
+
+      }
+     updateTotalPackPrice(selectedChocolates)
+    },[selectedChocolates])
+  return (
+    <Box className={styles.wrapper}>
+      <h2>Custom Pack of Chocolates</h2>
+      
+        <SelectedChocolatePills selectedChocolates={selectedChocolates} setSelectedChocolates={setSelectedChocolates}/>
+     
       <div className={styles.totalContainer}>
       <div className={styles.packPrice}>
       <h3>Pack Price: {totalPackPrice} Rs </h3>
@@ -79,10 +100,18 @@ const CustomPack = ({ selectedChocolates ,setSelectedChocolates}) => {
        <h4>{packQty}</h4>
        <Button variant="contained"  onClick={()=>increasePackQty()}>+</Button>
        </div>
+       
+      {selectedChocolates.length===pack &&  
+      (<>
+      <hr />
       <h3>Total Price:{totalPrice}  Rs </h3>
+      </>
+      
+      )
+      }
       </div>
       </div>
-    </div>
+    </Box>
   );
 };
 

@@ -1,0 +1,11 @@
+.wrapper{
+    text-align: center;
+    width: 100vw;
+    height: 7vh;
+    background-color: white;
+    color: black;
+
+}
+.wrapper>h2{
+   font-size: 1.25rem;
+}

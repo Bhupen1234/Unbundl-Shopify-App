@@ -36,9 +36,19 @@ h3,h4{
     justify-content: space-between;
     align-items: center;
     margin-bottom: 18px;
+    padding-bottom: 10px;
     
 }
 
 .totalPackPrice{
     margin-top: 22px;
+ 
 }
+
+/* @media only screen and (max-width: 899px){
+    .wrapper{
+        position: sticky;
+        top: 5vh;
+      
+    }
+} */

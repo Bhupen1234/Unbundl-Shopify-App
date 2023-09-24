@@ -4,17 +4,24 @@
 }
 *{
  margin: 0;
+ font-family: 'Pacifico', cursive !important;
 }
 
 html,body{
   height: 100%;
 }
 body{
-  font-family: "Poppins",sans-serif;
+  font-family: 'Pacifico', cursive !important;
   line-height: 1.5;
-  color: white;
-  background-color: black;
+ 
+
   overflow-x: hidden;
+  background-color: black; 
+  color: #fff;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 
@@ -22,3 +29,8 @@ img,svg{
   display: block;
   max-width: 100%;
 }
+
+
+
+
+

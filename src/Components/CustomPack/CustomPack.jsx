@@ -42,7 +42,7 @@ const CustomPack = ({ selectedChocolates ,setSelectedChocolates,pack}) => {
     const { enqueueSnackbar } = useSnackbar();
 
   
-
+  
     const updateTotalPackPrice =(selectedChoclates)=>{
        let sum=0;
        selectedChoclates.forEach((ele)=>{
@@ -52,12 +52,15 @@ const CustomPack = ({ selectedChocolates ,setSelectedChocolates,pack}) => {
         setTotalPackPrice(sum)
       
     }
+
+    //decrase the qty of pack
     const decreasePackQty =()=>{
         if(packQty>1){
             setPackQty((prevState)=> prevState-1)
         }
     }
-
+    
+    //decrase the qty of pack
      const increasePackQty =()=>{
 
         if(selectedChocolates.length>(pack-1)){
@@ -68,6 +71,13 @@ const CustomPack = ({ selectedChocolates ,setSelectedChocolates,pack}) => {
         }
        
         
+     }
+
+
+     
+     const handleCheckOut =()=>{
+      alert(`Please confirm your order for ₹ ${totalPrice}`)
+      window.location.reload()
      }
 
      useEffect(()=>{
@@ -105,11 +115,16 @@ const CustomPack = ({ selectedChocolates ,setSelectedChocolates,pack}) => {
       (<>
       <hr />
       <h3>Total Price:{totalPrice}  Rs </h3>
+      <div className="checkOut">
+      <Button variant="contained" onClick={()=>handleCheckOut()}>Checkout</Button>
+      </div>
       </>
       
       )
       }
+     
       </div>
+      
       </div>
     </Box>
   );

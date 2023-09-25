@@ -52,7 +52,7 @@ const Chocolates = ({setSelectedChocolates,selectedChocolates,pack}) => {
           })
      }
   }
-  
+   //Remove the specific chocolates from selectedChocolates
   const removeChocolate =(chocolate)=>{
     let filtereddata = selectedChocolates.filter((ele)=>(ele.id !== chocolate.id))
 
@@ -61,7 +61,7 @@ const Chocolates = ({setSelectedChocolates,selectedChocolates,pack}) => {
 
   return (
     <div className={styles.wrapper}>
-      <h2>Please Select the Chocolates</h2>
+      <h2>Select the Chocolates </h2>
       <Box className={styles.cardWrapper}   >
 
       
